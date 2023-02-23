@@ -1,0 +1,51 @@
+---
+# tasks file for install
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install required packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+
+#Install Docker
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker APT repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+    state: present
+
+- name: Update apt cache (again)
+  apt:
+    update_cache: yes
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    state: present
+
+- name: Add current user to the docker group
+  user:
+    name: global
+    append: yes
+    groups: docker
+
+#Install Docker compose
+- name: Install Docker Compose
+  shell: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  shell: sudo chmod +x /usr/local/bin/docker-compose
+
+#Install Git
+- name: Install Git
+  apt:
+    name: git
+    state: present

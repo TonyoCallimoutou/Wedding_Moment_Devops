@@ -1,0 +1,10 @@
+- name: Exo 1
+  hosts: all
+
+  tasks:
+    - name: check lnx dist
+      command: uname -a
+      register: dist_name
+    - name: 
+      debug:
+        var: dist_name.stdout
