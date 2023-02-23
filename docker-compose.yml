@@ -16,7 +16,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./AnimeHeaven/:/var/www/html/
+      - ../Project_Devops_code/:/var/www/html/
     ports:
       - "8080:80"
     tty: true
@@ -24,8 +24,6 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
     depends_on:
-      - db
-    links:
       - db
     environment:
       PMA_HOST: db
