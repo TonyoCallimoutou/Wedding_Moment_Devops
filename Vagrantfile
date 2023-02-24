@@ -40,13 +40,9 @@ Vagrant.configure("2") do |config|
         vb.memory = machine[:ram]
         vb.cpus = machine[:cpu]
       end 
-      # config.vm.provision "ansible" do |ansible|  
-      #   ansible.playbook = "playbook.yml"
-      # end
-      # config.vm.provision "shell", inline: <<-SHELL
-      # apt-get update
-      # apt-get install -y apache2
-      # SHELL
+      config.vm.provision "ansible" do |ansible|  
+        ansible.playbook = ".ansible/playbooks/Playbook_automation_projet.yml"
+      end
     end
 
   end
