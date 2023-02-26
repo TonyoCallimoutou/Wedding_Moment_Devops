@@ -1,2 +1,22 @@
 ---
 # tasks file for command
+- name: Get Projet from Github
+  git:
+    repo: https://github.com/TonyoCallimoutou/Project_Devops_code
+    dest: /home/vagrant/projet/Project_Devops_code
+
+- name: Copy docker-compose.yml
+  copy:
+    src: ../../../docker-compose.yml
+    dest: /home/vagrant/projet/docker-compose.yml
+    force: yes
+
+- name: Copy Dockerfile
+  copy:
+    src: ../../../Dockerfile
+    dest: /home/vagrant/projet/Dockerfile
+
+- name: Run docker-compose
+  shell: 
+    cmd: "sudo docker-compose up -d"
+    chdir: /home/vagrant/projet

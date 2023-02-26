@@ -2,16 +2,9 @@
 # vi: set ft=ruby :
 
 machines=[
-  # {
-  #   :hostname => "machine1",
-  #   # :ip => "192.168.100.10",
-  #   :box => "hashicorp/bionic64",
-  #   :ram => 2048,
-  #   :cpu => 2
-  # },
   {
-    :hostname => "machine2",
-    # :ip => "192.168.100.11",
+    :hostname => "machine1",
+    :ip => "192.168.56.1",
     :box => "hashicorp/bionic64",
     :ram => 2048,
     :cpu => 2
@@ -34,14 +27,16 @@ Vagrant.configure("2") do |config|
     config.vm.define machine[:hostname] do |node|
       node.vm.box = machine[:box]
       node.vm.hostname = machine[:hostname]
-      # node.vm.network "private_network", ip: machine[:ip]
+      node.vm.network "private_network", ip: machine[:ip]
       node.vm.provider "virtualbox" do |vb|
         vb.gui = false
         vb.memory = machine[:ram]
         vb.cpus = machine[:cpu]
       end 
+      config.vm.network "forwarded_port", guest: 8080, host: 8080
+      config.vm.network "forwarded_port", guest: 8081, host: 8081
       config.vm.provision "ansible" do |ansible|  
-        ansible.playbook = ".ansible/playbooks/Playbook_automation_projet.yml"
+        ansible.playbook = "./ansible/playbooks/Playbook_automation_projet.yml"
       end
     end
 
