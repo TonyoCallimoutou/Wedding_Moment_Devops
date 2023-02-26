@@ -32,3 +32,17 @@ En suivant ces étapes, nous avons automatisé la mise en place d'une architectu
 
 Enfin, Docker nous permet de créer des conteneurs légers et autonomes pour chaque microprocessus de notre site web, ce qui facilite la gestion et le déploiement de notre application web.
 
+## Méthodologie
+
+Dans le cadre de ce projet, nous avons adopté une méthodologie DevOps pour assurer une intégration continue (CI) et un déploiement continu (CD) de notre site web. Nous avons utilisé plusieurs outils et technologies pour mettre en place cette méthodologie, notamment GitHub pour la gestion de versions, Vagrant pour la création d'environnements de développement virtuels, Ansible pour la configuration et le déploiement de notre application et Docker pour créer et gérer nos conteneurs.
+
+Nous avons utilisé GitHub comme plateforme de gestion de versions pour notre code source. Cette plateforme nous a permis de travailler de manière collaborative et de partager notre code source avec l'équipe tout en suivant l'évolution des différentes versions. Nous avons également utilisé des outils de gestion de pull requests et de code reviews pour améliorer la qualité du code et faciliter l'intégration continue.
+
+Nous avons utilisé Vagrant pour créer un environnement de développement virtuel, qui nous a permis de travailler de manière isolée et de reproduire l'environnement de production dans lequel notre application sera déployée. Cela nous a permis de tester notre application dans un environnement contrôlé et de détecter les erreurs plus rapidement.
+
+Nous avons utilisé Ansible pour la configuration et le déploiement de notre application. Ansible nous a permis de déployer notre application de manière rapide et efficace sur des machines virtuelles en utilisant des playbooks et des rôles préconfigurés.
+
+Nous avons également utilisé Docker, avec qui on a pu créer une image de notre application et la déployer dans des conteneurs sur différents environnements de développement, de test et de production. Cela nous a permis de garantir que notre application fonctionnait de manière cohérente dans chaque environnement, tout en réduisant les conflits entre les différentes dépendances.
+
+En utilisant ces différentes technologies et méthodologies, nous avons pu mettre en place une CI/CD efficace pour notre application. Nous avons également pu gérer notre code source de manière efficace et travailler de manière collaborative en utilisant GitHub.
+
