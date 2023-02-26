@@ -1,28 +1,50 @@
 version: "3"
+networks:
+  my_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${IP_SUBNET}
 services:
   db:
     image: mysql
+    container_name: db
+    command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: animeheaven
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT: '%'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ../code/animeheaven.sql:/docker-entrypoint-initdb.d/animeheaven.sql
+    networks:
+      my_network:
+        ipv4_address: ${IP_MYSQL}
     ports:
-      - "9906:3306"
+      - "3306:3306"
+
   web:
     image: php:7.2.2-apache
     container_name: php_web
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - db
     volumes:
-      - ../Project_Devops_code/:/var/www/html/
+      - ../code/:/var/www/html/
+    env_file:
+      - ../code/.env
     ports:
-      - "8080:80"
+      - ${PORT_WEB}:80
     tty: true
+    networks:
+      - my_network
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
+    restart: always
     depends_on:
       - db
     environment:
@@ -30,4 +52,6 @@ services:
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     ports:
-      - "8081:80"
+      - ${PORT_PMA}:80
+    networks:
+      - my_network
