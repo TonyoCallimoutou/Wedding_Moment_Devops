@@ -1,30 +1,41 @@
 ## Projet Devops 
 
-Le projet consiste à automatiser la mise en place d'une architecture de bout en bout afin d'héberger un site web.
+Le projet consiste à automatiser la mise en place d'une architecture de bout en bout afin d'héberger un site web ( et plus précisement celui-ci : https://github.com/TonyoCallimoutou/Project_Devops_code )
 
-## Architecture
-SCHEMA DE NOTRE ARCHITECTURE
+### Prérequis
+- Vagrant
+- Ansible
+- Plugin 'dotenv' de vagrant (voici la commande pour l'installer : 'vagrant plugin install dotenv')
 
+### Lancement
+- Modifier le fichier .env selon vos variable d'environnement.
+- Lancer la commande 'vagrant up'
+- Votre site sera accessible selon les informations transmis dans le fichier .env à l'adresse <<IP_VM>>:<<PORT_WEB>> (exemple: 192.168.56.1:8080)
+
+## Partie technique
+
+### Architecture
 ![alt text](https://github.com/TonyoCallimoutou/Project_Devops/blob/68bb6939389379cc20abb561e1027d5c4a63bdc8/Schema%20Architecture.png)
-#### Vagrant
+
+### Vagrant
 1 - Installation de Vagrant :
 
 * Téléchargement et installation de Vagrant sur notre machine physique
 * Configuration du fichier Vagrantfile pour créer un environnement de développement virtuel avec les spécifications nécessaires pour héberger notre site web.
   
-#### Ansible
+### Ansible
 2 - Installation d'Ansible :
 
 * Téléchargement et installation d'Ansible sur notre machine physique
 
 Ensuite, nous allons configurer tout les composants nécessaires à notre environnement virtuel pour l'hébergement de notre site web 
   
-#### Docker
+### Docker
 3 - Installation de Docker :
 
 * Configuration du playbook Ansible pour installer Docker sur notre environnement virtuel
 * Configuration du playbook Ansible pour créer des conteneurs Docker pour chaque microprocessus de notre site web, tels que le conteneur pour le serveur web, le conteneur pour la base de données, etc.
-* Configuration du playbook Ansible pour créer une image docker en téléchargeant et en installant tous les composants nécessaires à notre environnement virtuel pour l'hébergement de notre site web, tels que Nginx, PHP, MySQL, etc
+* Configuration du playbook Ansible pour créer une image docker en téléchargeant et en installant tous les composants nécessaires à notre environnement virtuel pour l'hébergement de notre site web, tels que PHP, MySQL, etc
 
 L'image docker est un package léger et autonome qui inclut tout ce qui est nécessaire pour l'exécution d'un processus.
 
