@@ -1,2 +1,4 @@
 FROM php:7.2.2-apache
-RUN docker-php-ext-install mysqli
+
+# Install the PHP MySQL extension
+RUN docker-php-ext-install mysqli 

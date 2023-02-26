@@ -4,22 +4,22 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 192.168.96.0/24
+        - subnet: ${IP_SUBNET}
 services:
   db:
     image: mysql
     container_name: db
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: animeheaven
-      MYSQL_USER: tonyo
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - ./Project_Devops_code/animeheaven.sql:/docker-entrypoint-initdb.d/animeheaven.sql
+      - ../code/animeheaven.sql:/docker-entrypoint-initdb.d/animeheaven.sql
     networks:
       my_network:
-        ipv4_address: 192.168.96.2
+        ipv4_address: ${IP_MYSQL}
     ports:
       - "3306:3306"
 
@@ -32,9 +32,11 @@ services:
     depends_on:
       - db
     volumes:
-      - ./Project_Devops_code/:/var/www/html/
+      - ../code/:/var/www/html/
+    env_file:
+      - ../code/.env
     ports:
-      - "8080:80"
+      - ${PORT_WEB}:80
     tty: true
     networks:
       - my_network
@@ -50,6 +52,6 @@ services:
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     ports:
-      - "8081:80"
+      - ${PORT_PMA}:80
     networks:
       - my_network

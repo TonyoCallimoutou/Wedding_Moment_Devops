@@ -1,10 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'dotenv'
+Dotenv.load('.env')
+
 machines=[
   {
     :hostname => "machine1",
-    :ip => "192.168.56.1",
+    :ip => ENV["IP_VM"],
     :box => "hashicorp/bionic64",
     :ram => 2048,
     :cpu => 2
@@ -28,14 +31,25 @@ Vagrant.configure("2") do |config|
       node.vm.box = machine[:box]
       node.vm.hostname = machine[:hostname]
       node.vm.network "private_network", ip: machine[:ip]
+      node.vm.network "forwarded_port", guest: ENV["PORT_WEB"], host: ENV["PORT_WEB"]
+      node.vm.network "forwarded_port", guest: ENV["PORT_PMA"], host: ENV["PORT_PMA"]
+
       node.vm.provider "virtualbox" do |vb|
         vb.gui = false
         vb.memory = machine[:ram]
         vb.cpus = machine[:cpu]
-      end 
-      config.vm.network "forwarded_port", guest: 8080, host: 8080
-      config.vm.network "forwarded_port", guest: 8081, host: 8081
-      config.vm.provision "ansible" do |ansible|  
+      end
+
+      config.vm.provision "shell", inline: <<-SHELL
+        echo 'export PORT_WEB='#{ENV['PORT_WEB']}'' | sudo tee -a /etc/environment
+        echo 'export PORT_PMA='#{ENV['PORT_PMA']}'' | sudo tee -a /etc/environment
+        echo 'export MYSQL_ROOT_PASSWORD='#{ENV['MYSQL_ROOT_PASSWORD']}'' | sudo tee -a /etc/environment
+        echo 'export MYSQL_DATABASE='#{ENV['MYSQL_DATABASE']}'' | sudo tee -a /etc/environment
+        echo 'export MYSQL_USER='#{ENV['MYSQL_USER']}'' | sudo tee -a /etc/environment
+        echo 'export MYSQL_PASSWORD='#{ENV['MYSQL_PASSWORD']}'' | sudo tee -a /etc/environment
+      SHELL
+
+      node.vm.provision "ansible" do |ansible|  
         ansible.playbook = "./ansible/playbooks/Playbook_automation_projet.yml"
       end
     end
