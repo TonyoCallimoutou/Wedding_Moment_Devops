@@ -4,6 +4,8 @@ Le projet consiste à automatiser la mise en place d'une architecture de bout en
 
 ## Architecture
 SCHEMA DE NOTRE ARCHITECTURE
+
+![alt text](https://github.com/TonyoCallimoutou/Project_Devops/blob/68bb6939389379cc20abb561e1027d5c4a63bdc8/Schema%20Architecture.png)
 #### Vagrant
 1 - Installation de Vagrant :
 
