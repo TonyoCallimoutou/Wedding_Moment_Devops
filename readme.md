@@ -5,7 +5,10 @@ Le projet consiste à automatiser la mise en place d'une architecture de bout en
 ### Prérequis
 - Vagrant
 - Ansible
+- VirtualBox
 - Plugin 'dotenv' de vagrant (voici la commande pour l'installer : 'vagrant plugin install dotenv')
+
+Test réalisé sur une machine physique linux.
 
 ### Lancement
 - Modifier le fichier .env selon vos variable d'environnement.
