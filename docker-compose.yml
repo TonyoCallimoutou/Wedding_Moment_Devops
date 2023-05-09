@@ -16,42 +16,49 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - ../code/animeheaven.sql:/docker-entrypoint-initdb.d/animeheaven.sql
+      - ../code/Wedding_Moment_Back/weddingmoment.sql:/docker-entrypoint-initdb.d/weddingmoment.sql
     networks:
       my_network:
         ipv4_address: ${IP_MYSQL}
     ports:
       - "3306:3306"
 
-  web:
-    image: php:7.2.2-apache
-    container_name: php_web
-    build:
-      context: .
-      dockerfile: Dockerfile
+  front:
+    image: node:14
+    container_name: front
     depends_on:
       - db
     volumes:
-      - ../code/:/var/www/html/
-    env_file:
-      - ../code/.env
+      - ../code/Wedding_Moment_Front:/app
     ports:
-      - ${PORT_WEB}:80
-    tty: true
+      - ${PORT_FRONT}:4200
     networks:
       - my_network
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.2.1
-    container_name: phpmyadmin
+  back:
+    image: node:14
+    container_name: back
     restart: always
     depends_on:
       - db
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
+    volumes:
+      - ../code/Wedding_Moment_Back:/app
     ports:
-      - ${PORT_PMA}:80
+      - ${PORT_BACK}:8080
     networks:
       - my_network
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - ./Jenkinsfile:/app/Jenkinsfile
+    ports:
+      - ${PORT_JENKINS}:8080
+      - 50000:50000
+    networks:
+      - my_network
+
+volumes:
+  jenkins-data:

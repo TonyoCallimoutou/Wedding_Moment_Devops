@@ -1,8 +1,13 @@
 ---
 # Get project from github
-- name: Get Projet from Github
-  git:
-    repo: https://github.com/TonyoCallimoutou/Project_Devops_code
+- name: Get Back from Github
+  copy:
+    src: ../../../../Wedding_Moment_Back
+    dest: /home/vagrant/projet/code
+
+- name: Get Front from Github
+  copy:
+    src: ../../../../Wedding_Moment_Front
     dest: /home/vagrant/projet/code
 
 # Copy file
@@ -17,20 +22,10 @@
     src: ../../../docker-compose.yml
     dest: /home/vagrant/projet/docker/docker-compose.yml
 
-- name: Copy Dockerfile
-  copy:
-    src: ../../../Dockerfile
-    dest: /home/vagrant/projet/docker/Dockerfile
-
 - name: Copy .env for Docker compose
   copy:
     src: ../../../.env
     dest: /home/vagrant/projet/docker/.env
-
-- name: Copy .env for Code
-  copy:
-    src: ../../../.env
-    dest: /home/vagrant/projet/code/.env
 
 # RUN Docker
 - name: Run docker-compose
