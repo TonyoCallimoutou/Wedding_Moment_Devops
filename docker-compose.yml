@@ -10,11 +10,8 @@ services:
     image: mysql:8.0
     container_name: db
     command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file:
+      - ../${NAME_BACK_REPO_GIT}/.env
     volumes:
       - ../${NAME_BACK_REPO_GIT}/weddingmoment.sql:/docker-entrypoint-initdb.d/weddingmoment.sql
     networks:
@@ -28,6 +25,8 @@ services:
     build:
       context: ../${NAME_FRONT_REPO_GIT}/
       dockerfile: Dockerfile
+    env_file:
+      - ../${NAME_FRONT_REPO_GIT}/.env
     depends_on:
       - db
     ports:
@@ -41,6 +40,8 @@ services:
     build:
       context: ../${NAME_BACK_REPO_GIT}/
       dockerfile: Dockerfile
+    env_file:
+      - ../${NAME_BACK_REPO_GIT}/.env
     depends_on:
       - db
     ports:
