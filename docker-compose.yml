@@ -35,7 +35,6 @@ services:
       - my_network
 
   back:
-    image: node:lts
     container_name: back
     build:
       context: ../${NAME_BACK_REPO_GIT}/
