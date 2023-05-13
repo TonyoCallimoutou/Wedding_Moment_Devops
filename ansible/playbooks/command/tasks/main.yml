@@ -1,14 +1,16 @@
 ---
 # Get project from github
 - name: Get Back from Github
-  copy:
-    src: ../../../../Wedding_Moment_Back
-    dest: /home/vagrant/projet/code
+  git:
+    repo: https://{{GITHUB_TOKEN}}@github.com/{{GITHUB_USERNAME}}/{{NAME_BACK_REPO_GIT}}.git
+    dest: /home/vagrant/projet/{{NAME_BACK_REPO_GIT}}
+    version: DevOps
 
 - name: Get Front from Github
-  copy:
-    src: ../../../../Wedding_Moment_Front
-    dest: /home/vagrant/projet/code
+  git:
+    repo: https://{{GITHUB_TOKEN}}@github.com/{{GITHUB_USERNAME}}/{{NAME_FRONT_REPO_GIT}}.git
+    dest: /home/vagrant/projet/{{NAME_FRONT_REPO_GIT}}
+    version: DevOps
 
 # Copy file
 - name: Create a directory if it does not exist
@@ -26,6 +28,16 @@
   copy:
     src: ../../../.env
     dest: /home/vagrant/projet/docker/.env
+
+- name: Copy .env for Front
+  copy:
+    src: ../../../.env
+    dest: /home/vagrant/projet/{{NAME_FRONT_REPO_GIT}}/.env
+
+- name: Copy .env for Back
+  copy:
+    src: ../../../.env
+    dest: /home/vagrant/projet/{{NAME_BACK_REPO_GIT}}/.env
 
 # RUN Docker
 - name: Run docker-compose

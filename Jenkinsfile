@@ -2,19 +2,16 @@ pipeline {
   agent any
 
   stages {
-    stage('Install Dependencies') {
+    stage('Update Code') {
       steps {
-        dir('AngularFront') {
-          sh 'npm install'
-        }
-        dir('NodeBack') {
-          sh 'npm install'
-        }
+        // Récupérer les dernières modifications du code depuis Git
+        //git 'https://github.com/votre-repo.git'
       }
     }
 
-    stage('Deploy') {
+    stage('Build and Deploy') {
       steps {
+        // Construction et déploiement avec Docker Compose
         sh 'docker-compose up -d'
       }
     }

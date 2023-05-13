@@ -33,6 +33,7 @@ Vagrant.configure("2") do |config|
       node.vm.network "private_network", ip: machine[:ip]
       node.vm.network "forwarded_port", guest: ENV["PORT_FRONT"], host: ENV["PORT_FRONT"]
       node.vm.network "forwarded_port", guest: ENV["PORT_BACK"], host: ENV["PORT_BACK"]
+      node.vm.network "forwarded_port", guest: ENV["PORT_JENKINS"], host: ENV["PORT_JENKINS"]
 
       node.vm.provider "virtualbox" do |vb|
         vb.gui = false
@@ -41,6 +42,11 @@ Vagrant.configure("2") do |config|
       end
 
       config.vm.provision "shell", inline: <<-SHELL
+        echo 'export IP_VM='#{ENV['IP_VM']}'' | sudo tee -a /etc/environment
+        echo 'export GITHUB_TOKEN='#{ENV['GITHUB_TOKEN']}'' | sudo tee -a /etc/environment
+        echo 'export GITHUB_USERNAME='#{ENV['GITHUB_USERNAME']}'' | sudo tee -a /etc/environment
+        echo 'export NAME_FRONT_REPO_GIT='#{ENV['NAME_FRONT_REPO_GIT']}'' | sudo tee -a /etc/environment
+        echo 'export NAME_BACK_REPO_GIT='#{ENV['NAME_BACK_REPO_GIT']}'' | sudo tee -a /etc/environment
         echo 'export PORT_FRONT='#{ENV['PORT_FRONT']}'' | sudo tee -a /etc/environment
         echo 'export PORT_BACK='#{ENV['PORT_BACK']}'' | sudo tee -a /etc/environment
         echo 'export PORT_JENKINS='#{ENV['PORT_JENKINS']}'' | sudo tee -a /etc/environment
@@ -48,12 +54,24 @@ Vagrant.configure("2") do |config|
         echo 'export MYSQL_DATABASE='#{ENV['MYSQL_DATABASE']}'' | sudo tee -a /etc/environment
         echo 'export MYSQL_USER='#{ENV['MYSQL_USER']}'' | sudo tee -a /etc/environment
         echo 'export MYSQL_PASSWORD='#{ENV['MYSQL_PASSWORD']}'' | sudo tee -a /etc/environment
+        echo 'export IP_MYSQL='#{ENV['IP_MYSQL']}'' | sudo tee -a /etc/environment
+        echo 'export IP_SUBNET='#{ENV['IP_SUBNET']}'' | sudo tee -a /etc/environment
+        echo 'export FIREBASE_API_KEY='#{ENV['FIREBASE_API_KEY']}'' | sudo tee -a /etc/environment
+        echo 'export FIREBASE_AUTH_DOMAIN='#{ENV['FIREBASE_AUTH_DOMAIN']}'' | sudo tee -a /etc/environment
+        echo 'export FIREBASE_PROJECT_ID='#{ENV['FIREBASE_PROJECT_ID']}'' | sudo tee -a /etc/environment
+        echo 'export FIREBASE_STORAGE_BUCKET='#{ENV['FIREBASE_STORAGE_BUCKET']}'' | sudo tee -a /etc/environment
+        echo 'export FIREBASE_MESSAGING_SENDER_ID='#{ENV['FIREBASE_MESSAGING_SENDER_ID']}'' | sudo tee -a /etc/environment
+        echo 'export FIREBASE_APP_ID='#{ENV['FIREBASE_APP_ID']}'' | sudo tee -a /etc/environment
+        echo 'export FIREBASE_MEASUREMENT_ID='#{ENV['FIREBASE_MEASUREMENT_ID']}'' | sudo tee -a /etc/environment
       SHELL
 
       node.vm.provision "ansible" do |ansible|  
-        ansible.playbook = "./ansible/playbooks/Playbook_automation_projet.yml"
+        ansible.playbook = "./ansible/playbooks/playbook.yml"
         ansible.extra_vars = {
-          GITHUB_TOKEN: ENV["GITHUB_TOKEN"]
+          GITHUB_TOKEN: ENV["GITHUB_TOKEN"],
+          GITHUB_USERNAME: ENV["GITHUB_USERNAME"],
+          NAME_FRONT_REPO_GIT: ENV["NAME_FRONT_REPO_GIT"],
+          NAME_BACK_REPO_GIT: ENV["NAME_BACK_REPO_GIT"],
         }
       end
     end

@@ -16,7 +16,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - ../code/Wedding_Moment_Back/weddingmoment.sql:/docker-entrypoint-initdb.d/weddingmoment.sql
+      - ../${NAME_BACK_REPO_GIT}/weddingmoment.sql:/docker-entrypoint-initdb.d/weddingmoment.sql
     networks:
       my_network:
         ipv4_address: ${IP_MYSQL}
@@ -24,25 +24,25 @@ services:
       - "3306:3306"
 
   front:
-    image: node:14
     container_name: front
+    build:
+      context: ../${NAME_FRONT_REPO_GIT}/
+      dockerfile: Dockerfile
     depends_on:
       - db
-    volumes:
-      - ../code/Wedding_Moment_Front:/app
     ports:
       - ${PORT_FRONT}:4200
     networks:
       - my_network
 
   back:
-    image: node:14
+    image: node:lts
     container_name: back
-    restart: always
+    build:
+      context: ../${NAME_BACK_REPO_GIT}/
+      dockerfile: Dockerfile
     depends_on:
       - db
-    volumes:
-      - ../code/Wedding_Moment_Back:/app
     ports:
       - ${PORT_BACK}:8080
     networks:
@@ -57,6 +57,8 @@ services:
     ports:
       - ${PORT_JENKINS}:8080
       - 50000:50000
+    depends_on:
+      - db
     networks:
       - my_network
 
