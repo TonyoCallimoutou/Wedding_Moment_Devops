@@ -30,7 +30,7 @@ services:
     depends_on:
       - db
     ports:
-      - ${PORT_FRONT}:4200
+      - ${PORT_FRONT}:80
     networks:
       - my_network
 
@@ -44,7 +44,7 @@ services:
     depends_on:
       - db
     ports:
-      - ${PORT_BACK}:8080
+      - ${PORT_BACK}:3000
     networks:
       - my_network
 
