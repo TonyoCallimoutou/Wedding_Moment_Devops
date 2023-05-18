@@ -39,6 +39,16 @@
     append: yes
     groups: docker
 
+- name: Add jenkins user to the docker group
+  user:
+    name: jenkins
+    append: yes
+    groups: docker
+
+- name : Give Authorization for docker
+  shell: 
+    cmd: "sudo chmod 666 /var/run/docker.sock"
+
 #Install Docker compose
 - name: Install Docker Compose
   shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose

@@ -29,6 +29,11 @@
     src: ../../../.env
     dest: /home/vagrant/projet/docker/.env
 
+- name: Copy nginc.conf for NGINX
+  copy:
+    src: ../../../nginx.conf
+    dest: /home/vagrant/projet/docker/nginx.conf
+
 - name: Copy .env for Front
   copy:
     src: ../../../.env
