@@ -12,4 +12,9 @@ Le projet consiste à automatiser la mise en production de l'application Wedding
 ### Lancement
 - Modifier le fichier .env selon les variables d'environnement.
 - Lancer la commande 'vagrant up'
-- Le site sera accessible selon les informations transmis dans le fichier .env à l'adresse <<IP_VM>>:<<PORT_WEB>> (exemple: 192.168.56.1:8080)
+
+### Accès
+Selon les informations transmis dans le fichier .env nous avons :
+- Application Web : <<IP_VM>>:<<PORT_FRONT>>
+- Requête Back : <<IP_VM>>:<<PORT_BACK>>
+- Jenkins : <<IP_VM>>:<<PORT_JENKINS>>
