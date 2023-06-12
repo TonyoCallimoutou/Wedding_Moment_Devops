@@ -20,6 +20,22 @@ services:
     ports:
       - "3306:3306"
 
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.1
+    container_name: phpmyadmin
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - ${PORT_PMA}:80
+    networks:
+      - my_network
+
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins

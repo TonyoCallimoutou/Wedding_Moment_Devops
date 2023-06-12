@@ -34,6 +34,7 @@ Vagrant.configure("2") do |config|
       node.vm.network "forwarded_port", guest: ENV["PORT_FRONT"], host: ENV["PORT_FRONT"]
       node.vm.network "forwarded_port", guest: ENV["PORT_BACK"], host: ENV["PORT_BACK"]
       node.vm.network "forwarded_port", guest: ENV["PORT_JENKINS"], host: ENV["PORT_JENKINS"]
+      node.vm.network "forwarded_port", guest: ENV["PORT_PMA"], host: ENV["PORT_PMA"]
 
       node.vm.provider "virtualbox" do |vb|
         vb.gui = false
@@ -50,6 +51,7 @@ Vagrant.configure("2") do |config|
         echo 'export PORT_FRONT='#{ENV['PORT_FRONT']}'' | sudo tee -a /etc/environment
         echo 'export PORT_BACK='#{ENV['PORT_BACK']}'' | sudo tee -a /etc/environment
         echo 'export PORT_JENKINS='#{ENV['PORT_JENKINS']}'' | sudo tee -a /etc/environment
+        echo 'export PORT_PMA='#{ENV['PORT_PMA']}'' | sudo tee -a /etc/environment
         echo 'export MYSQL_ROOT_PASSWORD='#{ENV['MYSQL_ROOT_PASSWORD']}'' | sudo tee -a /etc/environment
         echo 'export MYSQL_DATABASE='#{ENV['MYSQL_DATABASE']}'' | sudo tee -a /etc/environment
         echo 'export MYSQL_USER='#{ENV['MYSQL_USER']}'' | sudo tee -a /etc/environment
