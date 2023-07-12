@@ -2,50 +2,53 @@
 # Get project from github
 - name: Get Back from Github
   git:
-    repo: https://{{GITHUB_TOKEN}}@github.com/{{GITHUB_USERNAME}}/{{NAME_BACK_REPO_GIT}}.git
-    dest: /home/vagrant/projet/{{NAME_BACK_REPO_GIT}}
-    version: DevOps
+    repo: https://{{GITHUB_TOKEN}}@github.com/TonyoCallimoutou/Wedding_Moment_Back.git
+    dest: /home/tonyo/projet/Wedding_Moment_Back
 
 - name: Get Front from Github
   git:
-    repo: https://{{GITHUB_TOKEN}}@github.com/{{GITHUB_USERNAME}}/{{NAME_FRONT_REPO_GIT}}.git
-    dest: /home/vagrant/projet/{{NAME_FRONT_REPO_GIT}}
-    version: DevOps
+    repo: https://{{GITHUB_TOKEN}}@github.com/TonyoCallimoutou/Wedding_Moment_Front.git
+    dest: /home/tonyo/projet/Wedding_Moment_Front
 
 # Copy file
 - name: Create a directory if it does not exist
   ansible.builtin.file:
-    path: /home/vagrant/projet/docker
+    path: /home/tonyo/projet/docker
     state: directory
     mode: '0755'
 
 - name: Copy docker-compose.yml
   copy:
     src: ../../../docker-compose.yml
-    dest: /home/vagrant/projet/docker/docker-compose.yml
+    dest: /home/tonyo/projet/docker/docker-compose.yml
 
 - name: Copy .env for Docker compose
   copy:
     src: ../../../.env
-    dest: /home/vagrant/projet/docker/.env
+    dest: /home/tonyo/projet/docker/.env
 
 - name: Copy nginc.conf for NGINX
   copy:
     src: ../../../nginx.conf
-    dest: /home/vagrant/projet/docker/nginx.conf
+    dest: /home/tonyo/projet/docker/nginx.conf
 
 - name: Copy .env for Front
   copy:
     src: ../../../.env
-    dest: /home/vagrant/projet/{{NAME_FRONT_REPO_GIT}}/.env
+    dest: /home/tonyo/projet/Wedding_Moment_Front/.env
 
 - name: Copy .env for Back
   copy:
     src: ../../../.env
-    dest: /home/vagrant/projet/{{NAME_BACK_REPO_GIT}}/.env
+    dest: /home/tonyo/projet/Wedding_Moment_Back/.env
+
+- name: Copy env.config.sh for dock
+  copy:
+    src: ../../../env.config.sh
+    dest: /home/tonyo/projet/docker/env.config.sh
 
 # RUN Docker
-- name: Run docker-compose
-  shell: 
-    cmd: "sudo docker-compose up -d"
-    chdir: /home/vagrant/projet/docker
+#- name: Run docker-compose
+#  shell: 
+#    cmd: "sudo docker-compose up -d"
+#    chdir: /home/tonyo/projet/docker
