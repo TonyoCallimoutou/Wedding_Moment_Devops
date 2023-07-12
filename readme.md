@@ -5,16 +5,9 @@ Le projet consiste à automatiser la mise en production de l'application Wedding
 - https://github.com/TonyoCallimoutou/Wedding_Moment_Back 
 
 ### Prérequis
-- Vagrant
 - Ansible
-- Plugin 'dotenv' de vagrant (voici la commande pour l'installer : 'vagrant plugin install dotenv')
 
 ### Lancement
-- Modifier le fichier .env selon les variables d'environnement.
-- Lancer la commande 'vagrant up'
-
-### Accès
-Selon les informations transmis dans le fichier .env nous avons :
-- Application Web : <<IP_VM>>:<<PORT_FRONT>>
-- Requête Back : <<IP_VM>>:<<PORT_BACK>>
-- Jenkins : <<IP_VM>>:<<PORT_JENKINS>>
+- Modifier les variable dans command/tasks/main.yml
+- Modifier les variable dans env.config.sh
+- lancer le playbook.yml

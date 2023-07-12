@@ -47,6 +47,17 @@
     src: ../../../env.config.sh
     dest: /home/tonyo/projet/docker/env.config.sh
 
+- name: Copy restart_docker.sh for dock
+  copy:
+    src: ../../../env.config.sh
+    dest: /home/tonyo/projet/docker/restart_docker.sh
+
+- name: Copy stop_docker.sh for dock
+  copy:
+    src: ../../../env.config.sh
+    dest: /home/tonyo/projet/docker/stop_docker.sh
+
+
 # RUN Docker
 #- name: Run docker-compose
 #  shell: 
